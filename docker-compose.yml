@@ -14,9 +14,9 @@ services:
   crud-back:
     depends_on:
       - mysql-db
-    image: mehdijebali/crud-back:latest
+    image: mehdijebali/crud-back:1.1
     ports:
-      - 8080:8080
+      - "8080:8080"
     environment:
       DB_HOST: mysql-db:3306
       DB_USER: root
@@ -25,9 +25,9 @@ services:
   crud-front:
     depends_on:
       - crud-back
-    image: mehdijebali/crud-front:latest
+    image: mehdijebali/crud-front:1.5
     ports:
-      - 8080:4000
+      - "4200:4200"
     
 volumes: 
   db_data:
