@@ -2,32 +2,38 @@ version: '3'
 
 services: 
   mysql-db: 
-    image: mysql:5
+    image: mysql:latest
     environment: 
-      MYSQL_ROOT_PASSWORD: root 
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: testdb
-      MYSQL_USER: root
+      MYSQL_USER: spring_user
       MYSQL_PASSWORD: 123456
+    ports:
+      - 3306:3306
     volumes: 
       - db_data:/var/lib/mysql
-    restart: always
+    restart: unless-stopped
+  
   crud-back:
     depends_on:
       - mysql-db
-    image: mehdijebali/crud-back:1.1
+    image: mehdijebali/crud-back:1.3
+    restart: on-failure
     ports:
-      - "8080:8080"
+      - 8080:8080
     environment:
-      DB_HOST: mysql-db:3306
-      DB_USER: root
-      PASSWORD: 123456
-
-  crud-front:
-    depends_on:
-      - crud-back
-    image: mehdijebali/crud-front:1.5
-    ports:
-      - "4200:4200"
+      DATABASE_HOST: mysql-db
+      DATABASE_USER: spring_user
+      DATABASE_PASSWORD: 123456
+      DATABASE_NAME: testdb
+      DATABASE_PORT: 3306
+    
+  # crud-front:
+    # depends_on:
+      # - crud-back
+    # image: mehdijebali/crud-front:1.5
+    # ports:
+      # - "4200:4200"
     
 volumes: 
   db_data:
