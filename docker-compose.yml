@@ -17,7 +17,7 @@ services:
   crud-back:
     depends_on:
       - mysql-db
-    image: mehdijebali/crud-back:1.2
+    image: mehdijebali/crud-back:1.3.1
     restart: on-failure
     ports:
       - 8080:8080
